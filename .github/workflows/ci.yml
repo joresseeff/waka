@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  backend:
+    name: Backend (FastAPI)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: pip install -r backend/requirements.txt
+      - name: Health check
+        run: |
+          cd backend
+          python -c "from database import create_tables; create_tables(); print('✅ DB OK')"
