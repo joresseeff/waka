@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
     final user = await AuthService.getCurrentUser();
     if (!mounted) return;
     if (user != null) {
-      context.go('/home');
+      context.go(user.isDriver ? '/driver' : '/home');
     } else {
       context.go('/login');
     }
@@ -49,8 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
             const SizedBox(height: 24),
-            const Text(
-              'WAKA',
+            const Text('WAKA',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 40,
@@ -59,18 +58,11 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Transport & Missions au Gabon',
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 14,
-              ),
+            const Text('Transport & Missions au Gabon',
+              style: TextStyle(color: Colors.white70, fontSize: 14),
             ),
             const SizedBox(height: 48),
-            const CircularProgressIndicator(
-              color: Colors.white,
-              strokeWidth: 2,
-            ),
+            const CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
           ],
         ),
       ),

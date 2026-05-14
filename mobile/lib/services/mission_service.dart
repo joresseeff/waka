@@ -52,4 +52,8 @@ class MissionService {
   static Future<void> acceptPrice(String missionId) async {
     await ApiService.post('/negotiations/$missionId/accept', {});
   }
+
+  static Future<void> updateOnlineStatus(bool isOnline) async {
+    await ApiService.put('/users/online', {'is_online': isOnline});
+  }
 }
