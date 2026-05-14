@@ -54,6 +54,6 @@ class MissionService {
   }
 
   static Future<void> updateOnlineStatus(bool isOnline) async {
-    await ApiService.put('/users/online', {'is_online': isOnline});
+    await ApiService.put('/users/me/online', {'is_online': isOnline});
   }
 }

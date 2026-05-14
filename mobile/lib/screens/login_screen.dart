@@ -20,9 +20,9 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_emailCtrl.text.isEmpty || _passwordCtrl.text.isEmpty) return;
     setState(() => _loading = true);
     try {
-      await AuthService.login(_emailCtrl.text.trim(), _passwordCtrl.text);
+      final user = await AuthService.login(_emailCtrl.text.trim(), _passwordCtrl.text);
       if (!mounted) return;
-      context.go('/home');
+      context.go(user.isDriver ? '/driver' : '/home');
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(

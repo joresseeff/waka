@@ -40,10 +40,22 @@ class AuthService {
   }
 
   static Future<User?> getCurrentUser() async {
-    final prefs = await SharedPreferences.getInstance();
-    final userJson = prefs.getString('user');
-    if (userJson == null) return null;
-    return User.fromJson(jsonDecode(userJson));
+    final token = await ApiService.getToken();
+    if (token == null) return null;
+    // Toujours recharger depuis l'API pour avoir le bon rôle
+    try {
+      final data = await ApiService.get('/users/me');
+      final user = User.fromJson(data);
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('user', jsonEncode(data));
+      return user;
+    } catch (_) {
+      // Si l'API échoue, utiliser le cache local
+      final prefs = await SharedPreferences.getInstance();
+      final userJson = prefs.getString('user');
+      if (userJson == null) return null;
+      return User.fromJson(jsonDecode(userJson));
+    }
   }
 
   static Future<void> logout() async {
