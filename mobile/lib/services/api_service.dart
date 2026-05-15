@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
   // Changer cette URL lors du déploiement
-  static const String baseUrl = 'http://localhost:8000/api';
+  static const String baseUrl = 'https://zestful-respect-production-e259.up.railway.app/api';
 
   static Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();
